@@ -1,0 +1,63 @@
+name: boda_salama
+description: A new Flutter project.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  google_maps_flutter: ^2.1.1
+  http: ^0.13.4
+  flutter_polyline_points: ^1.0.0
+  location: ^4.3.0
+  freezed: ^1.0.0
+  freezed_annotation: ^1.0.0
+  bloc: ^8.0.1
+  flutter_bloc: ^8.0.0
+  build_runner: ^2.1.1
+  provider: ^6.0.1
+  cached_network_image: ^3.2.0
+  geocoding: ^2.0.1
+  lottie: ^1.2.1
+  hive: ^2.0.5
+  hive_generator: ^1.1.1
+  uuid: ^3.0.5
+  path_provider: ^2.0.8
+  custom_timer: ^0.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/mapStyles/
+
+  fonts:
+    - family: SK Payidar
+      fonts:
+        - asset: fonts/SK Payidar Regular.ttf
+          weight: 500
+        - asset: fonts/SK Payidar Light.ttf
+          weight: 400
+        - asset: fonts/SK Payidar Medium.ttf
+          weight: 600
+
+    - family: Qlickers
+      fonts:
+        - asset: fonts/TheQlickers-Regular.ttf
+
+    - family: AppIcons
+      fonts:
+        - asset: fonts/icomoon.ttf

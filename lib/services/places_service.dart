@@ -13,9 +13,11 @@ class PlacesService {
       placemarks = [];
     }
 
-    return placemarks.first.street ??
-        placemarks.first.name ??
-        placemarks.first.thoroughfare;
+    return placemarks.isEmpty
+        ? 'unknown'
+        : placemarks.first.street ??
+            placemarks.first.name ??
+            placemarks.first.thoroughfare;
   }
 
   ///must enable billing for it to work,

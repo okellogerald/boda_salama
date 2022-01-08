@@ -168,67 +168,59 @@ class DriverProfilePage extends StatelessWidget {
   }
 
   _buildComplimentList() {
-    return Container(
-      height: 380.dh,
-      margin: EdgeInsets.symmetric(vertical: 15.dh),
-      child: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 1.45.dw,
-        physics: const NeverScrollableScrollPhysics(),
+    return Column(
+      children: [
+        _buildCompliment(
+            'https://cdn4.iconfinder.com/data/icons/basic-ui-2-line/32/word-balloon-speak-chat-conversation-128.png',
+            'Great Conversation',
+            35),
+        _buildCompliment(
+            'https://cdn3.iconfinder.com/data/icons/pandemic-solid-keep-healthy-routine/512/Alcohol_gel-128.png',
+            'Clean & Neat',
+            18),
+        _buildCompliment(
+            'https://cdn0.iconfinder.com/data/icons/sport-and-fitness-1/32/Sports_and_Fitness_helmet_rugby_football-128.png',
+            'Safe Driver',
+            20),
+        _buildCompliment(
+            'https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-128.png',
+            'Nice Experience',
+            35),
+        _buildCompliment(
+            'https://cdn0.iconfinder.com/data/icons/business-management-2-14/256/b-98-128.png',
+            'Timely Pickup',
+            22),
+      ],
+    );
+  }
+
+  _buildCompliment(String image, String title, int count) {
+    return Padding(
+      padding: EdgeInsets.only(top: 8.dw),
+      child: Row(
         children: [
-          _buildCompliment(
-              'https://cdn3.iconfinder.com/data/icons/research-element/1000/Interview-128.png',
-              'Great Conversation',
-              35),
-          _buildCompliment(
-              'https://image.flaticon.com/icons/png/512/1247/1247521.png',
-              'Clean & Neat',
-              18),
-          _buildCompliment(
-              'https://cdn0.iconfinder.com/data/icons/sport-achievment-badges/128/sport_badges-09-128.png',
-              'Safe Driver',
-              20),
-          _buildCompliment(
-              'https://image.flaticon.com/icons/png/512/1104/1104129.png',
-              'Nice Experience',
-              35),
-          _buildCompliment(
-              'https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Hourglass-128.png',
-              'Timely Pickup',
-              22),
+          AppImage(imageUrl: image, size: 50.dw),
+          SizedBox(width: 20.dw),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText(title, size: 14.dw, isBolded: true),
+              Container(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 10.dw, vertical: 3.dw),
+                color: Colors.grey.shade300,
+                child: AppText('x $count', size: 12.dw, isBolded: true),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  _buildCompliment(String image, String title, int count) {
-    return Column(
-      children: [
-        AppImage(imageUrl: image, size: 60.dw),
-        SizedBox(height: 8.dh),
-        AppText(
-          title,
-          size: 14.dw,
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 15.dw, vertical: 5.dw),
-          decoration: BoxDecoration(
-              color: AppColors.secondaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(12.dw))),
-          child: AppText(
-            'x $count',
-            size: 14.dw,
-            isBolded: true,
-            color: AppColors.onPrimary,
-          ),
-        ),
-      ],
-    );
-  }
-
   _buildTaxStatus() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.dw, vertical: 10.dh),
+      padding: EdgeInsets.fromLTRB(15.dw, 20.dh, 15.dw, 10.dh),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -236,18 +228,26 @@ class DriverProfilePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSectionTitle('Tax-paying status'),
-              SizedBox(height: 10.dh),
+              SizedBox(height: 5.dh),
               Row(
                 children: [
-                  AppImage(
-                      imageUrl:
-                          'https://cdn0.iconfinder.com/data/icons/emoji-3-5/64/thumbup_good_emoticon-128.png',
-                      size: 40.dw),
-                  SizedBox(width: 15.dw),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.dw, vertical: 5.dw),
+                    color: Colors.grey.shade200,
+                    child: AppText(
+                      'Active',
+                      size: 14.dw,
+                      isBolded: true,
+                      color: AppColors.accentColor,
+                    ),
+                  ),
+                  SizedBox(width: 10.dw),
                   Expanded(
                     child: AppText(
                       'Excellent tax payer. Never missed a single payment.',
-                      size: 16.dw,
+                      size: 14.dw,
+                      color: AppColors.textColor2,
                     ),
                   ),
                 ],
@@ -265,7 +265,7 @@ class DriverProfilePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20.dh),
+          SizedBox(height: 10.dh),
           _buildSectionTitle('Reviews'),
           _buildReview(
             'https://cdn1.iconfinder.com/data/icons/user-pictures/100/boy-128.png',
@@ -351,9 +351,6 @@ class DriverProfilePage extends StatelessWidget {
 
   _buildSectionTitle(String title) {
     return AppText(title,
-        size: 20.dw,
-        family: kFontFam2,
-        color: AppColors.textColor2,
-        isBolded: true);
+        size: 20.dw, color: AppColors.textColor2, isBolded: true);
   }
 }

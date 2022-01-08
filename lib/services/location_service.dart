@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:boda_salama/source.dart' hide Location;
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
 
 class LocationService {
@@ -76,34 +74,5 @@ class LocationService {
             2;
 
     return k2 * asin(sqrt(a));
-  }
-
-  ///till when you have enabled the billing on your account.
-  Future<Polyline> getPolyline(LatLng origin, LatLng destination) async {
-    List<LatLng> polylineCoordinates = [];
-
-    PolylinePoints polylinePoints = PolylinePoints();
-
-    final result = await polylinePoints.getRouteBetweenCoordinates(
-      kApiKey,
-      PointLatLng(origin.latitude, origin.longitude),
-      PointLatLng(destination.latitude, destination.longitude),
-      travelMode: TravelMode.driving,
-    );
-    if (result.points.isNotEmpty) {
-      for (PointLatLng point in result.points) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      }
-    } else {}
-
-    const id = PolylineId("poly");
-    Polyline polyline = Polyline(
-      polylineId: id,
-      color: AppColors.accentColor,
-      points: polylineCoordinates,
-      width: 8,
-    );
-
-    return polyline;
   }
 }

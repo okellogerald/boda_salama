@@ -37,12 +37,12 @@ class UserProfilePage extends StatelessWidget {
               size: 35.dw,
               iconSize: 25.dw,
             ),
-            AppIconButton(
+            AppTextButton(
               onPressed: () {},
-              icon: Icons.edit,
-              iconColor: AppColors.secondaryColor,
-              size: 35.dw,
-              iconSize: 25.dw,
+              text: 'Edit',
+              textColor: AppColors.primaryColor,
+              fontSize: 18.dw,
+              isBolded: true,
             )
           ],
         ),
@@ -61,7 +61,8 @@ class UserProfilePage extends StatelessWidget {
         SizedBox(height: 15.dh),
         AppText(
           'Angela Smith',
-          size: 22.dw,
+          size: 20.dw,
+          isBolded: true,
         ),
         SizedBox(height: 5.dh),
         AppText(
@@ -98,34 +99,22 @@ class UserProfilePage extends StatelessWidget {
       onPressed: () {},
       margin: EdgeInsets.only(top: 10.dh),
       padding: EdgeInsets.symmetric(horizontal: 15.dw, vertical: 5.dh),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Row(
-                children: [
-                  Icon(icon, size: 20.dw, color: AppColors.secondaryColor),
-                  SizedBox(width: 10.dw),
-                  AppText(title, size: 18.dw),
-                ],
-              ),
-              SizedBox(height: 10.dw),
-              AppText(
-                value,
-                size: 16.dw,
-                color: AppColors.textColor2,
-                family: kFontFam2,
-              )
+              Icon(icon, size: 20.dw, color: AppColors.secondaryColor),
+              SizedBox(width: 10.dw),
+              AppText(title, size: 16.dw, isBolded: true),
             ],
           ),
-          AppIconButton(
-              onPressed: () {},
-              icon: Icons.chevron_right,
-              size: 30.dw,
-              iconSize: 20.dw,
-              iconColor: AppColors.secondaryColor)
+          SizedBox(height: 5.dw),
+          AppText(
+            value,
+            size: 16.dw,
+            color: AppColors.textColor2,
+          )
         ],
       ),
     );
@@ -139,9 +128,9 @@ class UserProfilePage extends StatelessWidget {
           AppTextButton(
             onPressed: () {},
             text: 'Sign out',
+            isBolded: true,
             height: 45.dh,
             borderRadius: 5.dw,
-            family: kFontFam2,
             margin: EdgeInsets.only(left: 15.dw, right: 15.dw, bottom: 10.dw),
             buttonColor: AppColors.secondaryColor,
             textColor: AppColors.onPrimary,

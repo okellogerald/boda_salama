@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'package:custom_timer/custom_timer.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../source.dart';
 
 class DriverToCustomerPage extends StatefulWidget {
@@ -19,23 +18,35 @@ class DriverToCustomerPage extends StatefulWidget {
   State<DriverToCustomerPage> createState() => _DriverToCustomerPageState();
 }
 
-class _DriverToCustomerPageState extends State<DriverToCustomerPage> {
+class _DriverToCustomerPageState extends State<DriverToCustomerPage>
+    with WidgetsBindingObserver {
   static final Completer<GoogleMapController> mapController = Completer();
   final timerController = CustomTimerController();
+  final timerStateNotifier =
+      ValueNotifier<CustomTimerState>(CustomTimerState.paused);
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addObserver(this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: Column(
-        children: [
-          _buildSampleMap(),
-          _buildPickUpDetails(),
-          _buildPhoneNumber(),
-          _buildPickUpButton(),
-        ],
-      ),
-    );
+    return Builder(builder: (context) {
+      return Scaffold(
+        appBar: _buildAppBar(),
+        body: Column(
+          children: [
+            _buildSampleMap(),
+            _buildPickUpDetails(),
+            _buildPhoneNumber(),
+            _buildTimer(),
+            _buildPickUpButton(),
+          ],
+        ),
+      );
+    });
   }
 
   _buildAppBar() {
@@ -66,7 +77,6 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage> {
               myLocationButtonEnabled: false,
               myLocationEnabled: false,
               zoomControlsEnabled: false,
-              scrollGesturesEnabled: false,
               onMapCreated: (c) {
                 c.setMapStyle(AppMapStyling.getRetroStyle);
                 mapController.complete(c);
@@ -87,10 +97,13 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage> {
                   CameraPosition(target: position, zoom: 15.5)),
         ),
         Container(
-            padding: EdgeInsets.all(5.dw),
-            color: AppColors.secondaryColor,
-            child: AppText('Real-time tracking',
-                color: AppColors.onPrimary, size: 14.dw))
+            padding: EdgeInsets.symmetric(vertical: 5.dw, horizontal: 10.dw),
+            color: Colors.black87,
+            child: AppText(
+              'Real-time tracking',
+              size: 14.dw,
+              color: AppColors.onPrimary,
+            ))
       ],
     );
   }
@@ -136,6 +149,10 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage> {
     ]);
   }
 
+  void _makeACall() async {
+    await launch('tel:0742344768');
+  }
+
   _buildPhoneNumber() {
     return Container(
       height: 80.dh,
@@ -145,16 +162,26 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AppText(
-            '0745-543-443',
-            size: 18.dw,
-            isBolded: true,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppText(
+                'Customer\'s phone number',
+                size: 16.dw,
+                color: AppColors.textColor2,
+              ),
+              AppText(
+                '0745-543-443',
+                size: 18.dw,
+                isBolded: true,
+              ),
+            ],
           ),
           AppIconButton(
-            onPressed: () {},
+            onPressed: _makeACall,
             icon: Icons.call,
             iconColor: AppColors.onPrimary,
-            buttonColor: AppColors.secondaryColor,
+            buttonColor: AppColors.accentColor,
             size: 55.dw,
             iconSize: 25.dw,
           )
@@ -164,65 +191,72 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage> {
   }
 
   _buildPickUpButton() {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          AppTextButton(
-            onPressed: () {},
-            text: 'GO FOR PICK-UP',
+    return ValueListenableBuilder<CustomTimerState>(
+        valueListenable: timerStateNotifier,
+        builder: (context, timerState, snapshot) {
+          final isCounting = timerState == CustomTimerState.counting;
+          final isFinished = timerState == CustomTimerState.finished;
+          if (isFinished) return Container();
+
+          return AppTextButton(
+            onPressed: isCounting ? () {} : timerController.start,
+            text: isCounting ? 'Reached the customer' : 'GO FOR PICK-UP',
             buttonColor: AppColors.primaryColor,
             textColor: AppColors.onPrimary,
             height: 45.dh,
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 
   _buildTimer() {
     final trip = widget.trip;
+    final style = TextStyle(
+        fontSize: 50.dw,
+        fontWeight: FontWeight.w400,
+        color: AppColors.onPrimary);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 100.dh,
-          width: ScreenSizeConfig.getFullWidth,
-          color: Colors.grey.shade300,
-          alignment: Alignment.center,
-          child: CustomTimer(
-              controller: timerController,
-              begin: Duration(minutes: trip.timeAway),
-              end: const Duration(),
-              builder: (time) {
-                return Text(
-                    "${time.minutes} : ${time.seconds} : ${time.milliseconds}",
-                    style: TextStyle(
-                      fontSize: 30.dw,
-                      fontFamily: kFontFam,
-                      fontWeight: FontWeight.w600,
-                    ));
-              },
-              onChangeState: (state) {
-                // This callback function runs when the timer state changes.
-                print("Current state: $state");
-              }),
-        ),
-        SizedBox(height: 10.dh),
-        AppText(
-          '* A customer expects to see you around this time.',
-          size: 16.dw,
-          color: AppColors.accentColor,
-        ),
-        SizedBox(height: 10.dh),
-        AppTextButton(
-            onPressed: () {},
-            text: 'START',
-            buttonColor: AppColors.primaryColor,
-            textColor: AppColors.onPrimary,
-            height: 40.dh)
-      ],
+    return Expanded(
+      child: Container(
+        height: 100.dh,
+        width: ScreenSizeConfig.getFullWidth,
+        color: Colors.black87,
+        alignment: Alignment.center,
+        child: CustomTimer(
+            controller: timerController,
+            begin: Duration(minutes: trip.timeAway),
+            end: const Duration(),
+            builder: (time) {
+              return SizedBox(
+                width: 200.dw,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(time.minutes, style: style),
+                    SizedBox(width: 15.dw),
+                    Expanded(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(' : ', style: style),
+                        Text(time.seconds, style: style),
+                      ],
+                    )),
+                  ],
+                ),
+              );
+            },
+            onChangeState: (state) {
+              timerStateNotifier.value = state;
+            }),
+      ),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      log('google map has been reloaded on the driver to customer page');
+      setState(() {});
+    }
   }
 }

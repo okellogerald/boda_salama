@@ -66,9 +66,9 @@ class DriverProfile extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(
-          AppIcons.distance,
-          size: 20.dw,
+        Image.network(
+          'https://cdn0.iconfinder.com/data/icons/map-asset-1/24/distance-1-128.png',
+          height: 20.dh,
           color: AppColors.secondaryColor,
         ),
         SizedBox(width: 10.dw),
@@ -92,7 +92,6 @@ class DriverProfile extends StatelessWidget {
         onPressed: () =>
             DriverProfilePage.navigateTo(context, driver, userLocation),
         text: 'View full profile',
-        family: kFontFam2,
         borderRadius: 5.dw,
         height: 45.dh,
         margin: EdgeInsets.only(top: 20.dh),

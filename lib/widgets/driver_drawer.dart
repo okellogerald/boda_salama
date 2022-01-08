@@ -110,33 +110,39 @@ class DriverDrawer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 40.dh),
-        _buildTile(Icons.document_scanner, 'Document Management'),
+        _buildTile(Icons.document_scanner, 'Document Management',
+            isClickable: true),
         _buildTile(Icons.two_wheeler_outlined, 'Vehicle Management'),
         _buildTile(Icons.money, 'Earnings History'),
         _buildTile(Icons.notifications_outlined, 'Notifications'),
         _buildTile(Icons.share, 'Invite Friends'),
-        _buildTile(AppIcons.support, 'Support'),
+        _buildTile(Icons.support, 'Support'),
         _buildTile(Icons.info_outline, 'About'),
         _buildTile(Icons.settings_outlined, 'Settings'),
       ],
     );
   }
 
-  _buildTile(IconData icon, String title) {
-    return AppMaterialButton(
-      onPressed: () {},
-      padding: EdgeInsets.only(top: 5.dh, bottom: 5.dh, left: 15.dw),
-      child: Row(
-        children: [
-          Icon(icon, color: AppColors.secondaryColor, size: 22.dw),
-          SizedBox(width: 15.dw),
-          AppText(
-            title,
-            size: 16.dw,
-            color: AppColors.textColor,
-          ),
-        ],
-      ),
-    );
+  _buildTile(IconData icon, String title, {bool isClickable = false}) {
+    return Builder(builder: (context) {
+      return AppTextButton(
+        onPressed: isClickable
+            ? () => DocumentManagement.navigateTo(context, driver)
+            : () {},
+        padding: EdgeInsets.only(left: 15.dw, top: 10.dh, bottom: 10.dh),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.secondaryColor, size: 22.dw),
+            SizedBox(width: 15.dw),
+            AppText(
+              title,
+              size: 16.dw,
+              color: AppColors.textColor2,
+              weight: FontWeight.w600,
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

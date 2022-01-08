@@ -23,7 +23,6 @@ class AppTextButton extends StatefulWidget {
       required this.onPressed,
       this.duration = const Duration(milliseconds: 200),
       this.borderRadius,
-      this.family,
       Key? key})
       : super(key: key);
 
@@ -44,7 +43,6 @@ class AppTextButton extends StatefulWidget {
   final double? fontSize;
   final bool isBolded, withIcon, useButtonSizeOnly, useFullWidth;
   final Widget? child;
-  final String? family;
   final Alignment? alignment;
 
   @override
@@ -136,7 +134,6 @@ class _AppTextButtonState extends State<AppTextButton>
       widget.text ?? 'Click Me',
       size: widget.fontSize ?? 15.dw,
       isBolded: widget.isBolded,
-      family: widget.family ?? kFontFam,
       color: widget.textColor ?? AppColors.textColor,
       maxLines: 2,
     );

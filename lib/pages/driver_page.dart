@@ -349,10 +349,7 @@ class _DriverPageState extends State<DriverPage> with WidgetsBindingObserver {
       scrollGesturesEnabled: !supp.isOffline,
       onMapCreated: mapController.isCompleted
           ? (_) {}
-          : (controller) {
-              controller.setMapStyle(AppMapStyling.getDarkStyle);
-              mapController.complete(controller);
-            },
+          : (controller) => mapController.complete(controller),
       initialCameraPosition: CameraPosition(target: location, zoom: 16.25),
     );
   }

@@ -16,18 +16,21 @@ class DriverPageBloc extends Cubit<DriverPageState> {
   void init(Completer<GoogleMapController> controller) async {
     var supp = state.supplements;
     emit(DriverPageState.loading(supp));
+
     await AppMapStyling.loadMapStyles();
+    final trips = await _getTrips();
     final driver = tripsService.getDriver;
     final marker = Marker(
       markerId: _driverId,
       position: driver.position,
-      icon: AppMarkers.getDriverIcon,
+      icon: AppMarkers.getDarkDriverIcon,
     );
     _driverMarker = marker;
     final _controller = await controller.future;
     _controller.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: driver.position, zoom: 16.25)));
-    supp = supp.copyWith(driver: driver, markers: [marker]);
+    supp = supp.copyWith(
+        driver: driver, markers: [marker], trips: trips, isOffline: false);
     emit(DriverPageState.content(supp));
   }
 
@@ -56,8 +59,7 @@ class DriverPageBloc extends Cubit<DriverPageState> {
   }
 
   Future<List<Trip>> _getTrips() async {
-    var supp = state.supplements;
-    final driver = supp.driver;
+    final driver = tripsService.getDriver;
     final position = driver.position;
 
     final trips = <Trip>[];
@@ -118,7 +120,7 @@ class DriverPageBloc extends Cubit<DriverPageState> {
     final marker = Marker(
       markerId: const MarkerId('customer'),
       position: LatLng(trip.pickUpLatitude, trip.pickUpLongitude),
-      icon: BitmapDescriptor.defaultMarker,
+      icon: AppMarkers.getLocationIcon,
     );
     final driverMarker = Marker(
       markerId: _driverMarker.markerId,
@@ -132,8 +134,6 @@ class DriverPageBloc extends Cubit<DriverPageState> {
   void ignore(String tripId) {
     var supp = state.supplements;
     emit(DriverPageState.loading(supp));
-    log(supp.trips.length.toString());
-    log(supp.currentIndex.toString());
     final lastIndex = supp.trips.length - 1;
     final index =
         supp.currentIndex == lastIndex ? lastIndex - 1 : supp.currentIndex;

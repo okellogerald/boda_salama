@@ -6,3 +6,5 @@ export 'chat_page.dart';
 export 'driver_page.dart';
 export 'on_driver_app_driver_profile_page.dart';
 export 'driver_to_customer_page.dart';
+export 'document_management_page.dart';
+export 'document_page.dart';

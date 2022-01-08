@@ -44,7 +44,6 @@ class AppDrawer extends StatelessWidget {
             text: 'View profile',
             textColor: AppColors.primaryColor,
             height: 30.dh,
-            family: kFontFam2,
           ),
         ],
       );
@@ -59,7 +58,7 @@ class AppDrawer extends StatelessWidget {
         _buildTile(Icons.notifications_outlined, 'Notifications'),
         _buildTile(Icons.two_wheeler_outlined, 'Ride History'),
         _buildTile(Icons.payment, 'Payments'),
-        _buildTile(AppIcons.support, 'Support'),
+        _buildTile(Icons.support, 'Support'),
         _buildTile(Icons.info_outline, 'About'),
         _buildTile(Icons.settings_outlined, 'Settings'),
       ],
@@ -89,7 +88,6 @@ class AppDrawer extends StatelessWidget {
             AppTextButton(
               onPressed: hasTrip ? () => DriverPage.navigateTo(context) : () {},
               text: 'Become a driver',
-              family: kFontFam2,
               margin: EdgeInsets.symmetric(horizontal: 15.dw),
               height: 45.dh,
               width: ScreenSizeConfig.getFullWidth,

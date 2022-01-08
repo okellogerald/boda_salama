@@ -123,7 +123,7 @@ class _CustomLocationPageState extends State<CustomLocationPage>
     return Positioned(
       bottom: 0,
       child: Container(
-        height: 60.dh,
+        height: 80.dh,
         width: ScreenSizeConfig.getFullWidth,
         decoration: BoxDecoration(
             color: Colors.white,
@@ -146,11 +146,10 @@ class _CustomLocationPageState extends State<CustomLocationPage>
                   )
                 : AppTextButton(
                     onPressed: bloc.confirm,
-                    borderRadius: 5.dw,
+                    borderRadius: 15.dw,
                     text: 'Confirm Location',
                     buttonColor: AppColors.primaryColor,
-                    family: kFontFam2,
-                    height: 35.dh,
+                    height: 45.dh,
                     width: 300.dw,
                     margin: EdgeInsets.only(left: 15.dw),
                     textColor: AppColors.onPrimary,

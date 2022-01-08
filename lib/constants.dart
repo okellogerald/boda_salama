@@ -2,13 +2,12 @@ import 'package:boda_salama/source.dart';
 
 const kTripDetailsBox = 'trip_details_box';
 
-const kFontFam = 'SK Payidar';
-const kFontFam2 = kFontFam;
-
 const kApiKey = 'AIzaSyD9gRxDtPoW2eIQaPl4bWvgpcJhXocXGL8';
 
 const kOpeningImage =
     'https://images.pexels.com/photos/7412104/pexels-photo-7412104.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
+const kTRALogo =
+    'https://gateway.tra.go.tz/paymentregistration/Account/Content/images/tralogo.jpg';
 
 const kReview1 =
     'Nice experience. Rest at ease with this driver, he is very compitent.';

@@ -27,7 +27,7 @@ class ChatPageBloc extends Cubit<ChatPageState> {
     log('resuming from the chat page');
     emit(const ChatPageState.loading('Refreshing the map'));
     final controller = await mapController.future;
-    controller.setMapStyle('[]');
+    controller.setMapStyle(AppMapStyling.getRetroStyle);
     emit(const ChatPageState.content());
   }
 }

@@ -114,7 +114,7 @@ class _CustomLocationPageState extends State<CustomLocationPage>
                 alignment: Alignment.center,
                 width: ScreenSizeConfig.getFullWidth - 30.dw,
                 child: AppText(editor.address,
-                    size: 16.dw, color: AppColors.onPrimary2),
+                    size: 16.dw, color: AppColors.onPrimary),
               ),
             ));
   }

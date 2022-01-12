@@ -150,9 +150,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             circleId: const CircleId('-1'),
             radius: 375,
             strokeWidth: 2,
-            strokeColor: AppColors.primaryColor.withOpacity(.65),
+            strokeColor: AppColors.secondaryColor.withOpacity(.65),
             center: location,
-            fillColor: AppColors.primaryColor.withOpacity(.1),
+            fillColor: AppColors.secondaryColor.withOpacity(.1),
           )
         },
         initialCameraPosition: CameraPosition(target: location, zoom: 16.25));

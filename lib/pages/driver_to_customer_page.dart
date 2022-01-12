@@ -35,7 +35,6 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       return Scaffold(
-        backgroundColor: Colors.grey.shade200,
         appBar: _buildAppBar(),
         body: Column(
           children: [
@@ -135,18 +134,26 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
   }
 
   _buildPickUpDetail(String title, String value) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      SizedBox(
-          width: 100.dw,
-          child: AppText(title, size: 16.dw, color: AppColors.textColor)),
-      SizedBox(width: 30.dw),
-      Expanded(
-          child: Row(
-        children: [
-          AppText(value, size: 16.dw, color: AppColors.textColor2),
-        ],
-      )),
-    ]);
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.dh),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        SizedBox(
+            width: 100.dw,
+            child: AppText(
+              title,
+              size: 16.dw,
+              isBolded: true,
+              color: AppColors.textColor2,
+            )),
+        SizedBox(width: 30.dw),
+        Expanded(
+            child: Row(
+          children: [
+            AppText(value, size: 16.dw, color: AppColors.textColor2),
+          ],
+        )),
+      ]),
+    );
   }
 
   void _makeACall() async {
@@ -156,7 +163,7 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
   _buildPhoneNumber() {
     return Container(
       width: ScreenSizeConfig.getFullWidth,
-      color: Colors.white,
+      color: Colors.grey.shade300,
       padding: EdgeInsets.symmetric(horizontal: 15.dw, vertical: 15.dh),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,10 +176,7 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
                 size: 16.dw,
                 color: AppColors.textColor2,
               ),
-              AppText(
-                '0745-543-443',
-                size: 18.dw,
-              ),
+              AppText('0745-543-443', size: 18.dw),
             ],
           ),
           AppIconButton(
@@ -264,7 +268,7 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
     if (state == AppLifecycleState.resumed) {
       log('google map has been reloaded on the driver to customer page using set state');
       final controller = await mapController.future;
-      controller.setMapStyle('[]');
+      controller.setMapStyle(AppMapStyling.getRetroStyle);
     }
   }
 }

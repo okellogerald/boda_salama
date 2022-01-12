@@ -79,7 +79,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
               onPressed: bloc.cancelTrip,
               text: 'Cancel',
               height: 45.dh,
-              buttonColor: Colors.grey.shade400,
+              buttonColor: Colors.grey.shade300,
+              textColor: AppColors.primaryColor,
             ),
           ],
         ),
@@ -182,7 +183,7 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             size: 20.dw,
             isBolded: true,
           ),
-          SizedBox(height: 5.dh),
+          SizedBox(height: 10.dh),
           _buildPickUpDetail('Name', driver.name),
           _buildPickUpDetail(
               'Distance', driver.distance.toStringAsFixed(2) + ' m'),
@@ -194,19 +195,26 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   }
 
   _buildPickUpDetail(String title, String value) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      SizedBox(
-          width: 100.dw,
-          child: AppText(title,
-              size: 16.dw, isBolded: true, color: AppColors.textColor2)),
-      SizedBox(width: 30.dw),
-      Expanded(
-          child: Row(
-        children: [
-          AppText(value, size: 16.dw, color: AppColors.textColor2),
-        ],
-      )),
-    ]);
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.dh),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        SizedBox(
+            width: 100.dw,
+            child: AppText(
+              title,
+              size: 16.dw,
+              color: AppColors.textColor2,
+              isBolded: true,
+            )),
+        SizedBox(width: 30.dw),
+        Expanded(
+            child: Row(
+          children: [
+            AppText(value, size: 16.dw, color: AppColors.textColor2),
+          ],
+        )),
+      ]),
+    );
   }
 
   void _makeACall() async {
@@ -225,16 +233,9 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppText(
-                'Driver\'s phone number',
-                size: 16.dw,
-                color: AppColors.textColor2,
-              ),
-              AppText(
-                '0745-543-443',
-                size: 18.dw,
-                isBolded: true,
-              ),
+              AppText('Driver\'s phone number',
+                  size: 16.dw, color: AppColors.textColor2),
+              AppText('0745-543-443', size: 16.dw),
             ],
           ),
           AppIconButton(
@@ -257,10 +258,11 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         children: [
           AppTextButton(
             onPressed: () {},
-            text: 'Driver has arrived',
+            text: 'Driver Has Arrived',
             buttonColor: AppColors.primaryColor,
             textColor: AppColors.onPrimary,
             height: 45.dh,
+            borderRadius: 0,
           ),
         ],
       ),

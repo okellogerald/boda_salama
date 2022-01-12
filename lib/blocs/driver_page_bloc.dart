@@ -142,7 +142,7 @@ class DriverPageBloc extends Cubit<DriverPageState> {
     final marker = Marker(
       markerId: const MarkerId('customer'),
       position: LatLng(trip.pickUpLatitude, trip.pickUpLongitude),
-      icon: AppMarkers.getLocationIcon,
+      icon: BitmapDescriptor.defaultMarker,
     );
     final driverMarker = Marker(
       markerId: _driverMarker.markerId,

@@ -1,7 +1,7 @@
 import '../source.dart';
 
-class AppDrawer extends StatelessWidget {
-  const AppDrawer(this.hasTrip, {Key? key}) : super(key: key);
+class UserDrawer extends StatelessWidget {
+  const UserDrawer(this.hasTrip, {Key? key}) : super(key: key);
 
   final bool hasTrip;
 
@@ -43,7 +43,8 @@ class AppDrawer extends StatelessWidget {
             onPressed: () => UserProfilePage.navigateTo(context),
             text: 'View profile',
             textColor: AppColors.primaryColor,
-            height: 30.dh,
+            height: 40.dh,
+            margin: EdgeInsets.only(top: 5.dh),
           ),
         ],
       );
@@ -67,16 +68,15 @@ class AppDrawer extends StatelessWidget {
 
   _buildTile(IconData icon, String title) {
     return AppMaterialButton(
-      onPressed: () {},
-      padding: EdgeInsets.only(top: 5.dh, bottom: 5.dh, left: 15.dw),
-      child: Row(
-        children: [
-          Icon(icon, color: AppColors.secondaryColor, size: 22.dw),
-          SizedBox(width: 15.dw),
-          AppText(title, size: 16.dw),
-        ],
-      ),
-    );
+        onPressed: () {},
+        padding: EdgeInsets.only(left: 15.dw),
+        child: ListTile(
+          leading: Icon(icon),
+          title: AppText(title, size: 16.dw),
+          horizontalTitleGap: 5.dw,
+          contentPadding: EdgeInsets.zero,
+          dense: true,
+        ));
   }
 
   _buildBecomeDriver() {
@@ -86,8 +86,8 @@ class AppDrawer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             AppTextButton(
-              onPressed: hasTrip ? () => DriverPage.navigateTo(context) : () {},
-              text: 'Become a driver',
+              onPressed: () => DriverPage.navigateTo(context),
+              text: 'Become A Driver',
               margin: EdgeInsets.symmetric(horizontal: 15.dw),
               height: 45.dh,
               width: ScreenSizeConfig.getFullWidth,
@@ -95,7 +95,6 @@ class AppDrawer extends StatelessWidget {
                   hasTrip ? AppColors.accentColor : AppColors.primaryColor,
               isBolded: false,
               textColor: AppColors.onPrimary,
-              borderRadius: 5.dw,
             ),
             SizedBox(height: 10.dh)
           ],

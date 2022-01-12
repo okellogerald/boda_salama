@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../source.dart';
 
 class ChatPageBloc extends Cubit<ChatPageState> {
@@ -19,5 +21,13 @@ class ChatPageBloc extends Cubit<ChatPageState> {
   void cancelTrip() {
     _isCancelled = true;
     emit(const ChatPageState.cancelled());
+  }
+
+  void refreshMap(Completer<GoogleMapController> mapController) async {
+    log('resuming from the chat page');
+    emit(const ChatPageState.loading('Refreshing the map'));
+    final controller = await mapController.future;
+    controller.setMapStyle('[]');
+    emit(const ChatPageState.content());
   }
 }

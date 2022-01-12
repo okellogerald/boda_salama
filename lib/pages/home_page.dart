@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return Scaffold(
       key: scaffoldKey,
       appBar: _buildAppBar(supp),
-      drawer: AppDrawer(supp.trip.isReal),
+      drawer: UserDrawer(supp.trip.isReal),
       body: Stack(
         fit: StackFit.expand,
         alignment: Alignment.topCenter,
@@ -183,67 +183,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 Location(address: supp.address, point: supp.location)));
   }
 
-  /*  _buildAppBar(Supplements supp) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(75.dh),
-      child: Builder(builder: (context) {
-        return Material(
-          elevation: 2,
-          shadowColor: Colors.grey.shade100,
-          child: Container(
-            width: ScreenSizeConfig.getFullWidth - 30.dw,
-            padding: EdgeInsets.fromLTRB(15.dw, 25.dh, 15.dw, 0),
-            height: 75.dh,
-            alignment: Alignment.bottomCenter,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      AppIconButton(
-                        onPressed: scaffoldKey.currentState!.openDrawer,
-                        icon: Icons.menu_outlined,
-                        size: 40.dw,
-                        iconSize: 25.dw,
-                        iconColor: AppColors.secondaryColor,
-                      ),
-                      supp.trip.isReal
-                          ? Positioned(
-                              right: 8.dw,
-                              top: 10.dh,
-                              child: const NotificationBanner())
-                          : Container()
-                    ],
-                  ),
-                  AppText(
-                    widget.location != null
-                        ? widget.location!.address
-                        : supp.address,
-                    size: 15.dw,
-                    color: AppColors.primaryColor,
-                  ),
-                  AppIconButton(
-                    onPressed: () => CustomLocationPage.navigateTo(context,
-                        location: widget.location),
-                    icon: Icons.edit_location_outlined,
-                    size: 40.dw,
-                    iconSize: 25.dw,
-                    iconColor: AppColors.secondaryColor,
-                  ),
-                ]),
-          ),
-        );
-      }),
-    );
-  } */
-
   _buildAppBar(Supplements supp) {
     return AppBar(
       centerTitle: true,
-      elevation: 2,
+      elevation: 0,
       shadowColor: Colors.grey.shade300,
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.secondaryColor,
       leading: Builder(builder: (context) {
         return Stack(
           alignment: Alignment.centerLeft,
@@ -254,19 +199,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               size: 40.dw,
               iconSize: 25.dw,
               margin: EdgeInsets.only(left: 10.dw),
-              iconColor: AppColors.secondaryColor,
+              iconColor: AppColors.onPrimary,
             ),
             supp.trip.isReal
                 ? Positioned(
                     right: 10.dw, top: 18.dh, child: const NotificationBanner())
                 : Container()
-          ], 
+          ],
         );
       }),
       title: AppText(
         widget.location != null ? widget.location!.address : supp.address,
         size: 15.dw,
-        color: AppColors.primaryColor,
+        color: AppColors.onPrimary,
       ),
       actions: [
         AppIconButton(
@@ -275,7 +220,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           icon: Icons.edit_location_outlined,
           size: 40.dw,
           iconSize: 25.dw,
-          iconColor: AppColors.secondaryColor,
+          margin: EdgeInsets.only(right: 10.dw),
+          iconColor: AppColors.onPrimary,
         ),
       ],
     );
@@ -284,6 +230,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
+      log('resuming on the homepage using set state');
       bloc.refreshMap(mapController);
     }
   }

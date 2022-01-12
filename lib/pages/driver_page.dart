@@ -72,7 +72,7 @@ class _DriverPageState extends State<DriverPage> with WidgetsBindingObserver {
               height: 280.dh,
               width: ScreenSizeConfig.getFullWidth,
               decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: AppColors.secondaryColor,
                   borderRadius:
                       BorderRadius.only(topLeft: radius, topRight: radius)),
               child: Column(
@@ -188,20 +188,18 @@ class _DriverPageState extends State<DriverPage> with WidgetsBindingObserver {
                 text: 'view on map',
                 textColor: AppColors.primaryColor,
                 alignment: Alignment.centerLeft,
-                width: 120.dw,
+                borderRadius: 0,
+                width: 100.dw,
               ),
             ],
           ),
         ),
         Padding(
           padding: EdgeInsets.only(left: 20.dw),
-          child: GestureDetector(
-            //  onTap: () => scaffoldKey.currentState!.openDrawer(),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(trip.customerImage),
-              backgroundColor: Colors.grey.shade300,
-              radius: 45.dw,
-            ),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(trip.customerImage),
+            backgroundColor: Colors.grey.shade300,
+            radius: 45.dw,
           ),
         )
       ],
@@ -289,50 +287,34 @@ class _DriverPageState extends State<DriverPage> with WidgetsBindingObserver {
   }
 
   _buildAppBar(DriverPageSupplements supp) {
-    final hasJustStarted = supp.driver.image == '';
-
-    return PreferredSize(
-      preferredSize: Size.fromHeight(75.dh),
-      child: Material(
-        elevation: 2,
-        shadowColor: Colors.grey.shade100,
-        color: supp.isOffline ? Colors.white : Colors.black87,
-        child: Container(
-          width: ScreenSizeConfig.getFullWidth - 30.dw,
-          padding: EdgeInsets.symmetric(horizontal: 15.dw, vertical: 5.dw),
-          height: 75.dh,
-          alignment: Alignment.bottomCenter,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            GestureDetector(
-              onTap: () => scaffoldKey.currentState!.openDrawer(),
-              child: CircleAvatar(
-                  backgroundColor: Colors.black,
-                  backgroundImage: NetworkImage(!hasJustStarted
-                      ? supp.driver.image
-                      : 'https://cdn1.iconfinder.com/data/icons/user-pictures/100/female1-128.png'),
-                  radius: 20.dw),
-            ),
-            AppText(
-              supp.isOffline ? 'offline' : 'online',
-              size: 18.dw,
-              color: supp.isOffline
-                  ? AppColors.secondaryColor
-                  : AppColors.onPrimary,
-            ),
-            AppIconButton(
-              onPressed: () => bloc.toggleStatus(mapController),
-              icon:
-                  supp.isOffline ? Icons.toggle_off_outlined : Icons.toggle_on,
-              size: 40.dw,
-              iconSize: 35.dw,
-              iconColor: supp.isOffline
-                  ? AppColors.secondaryColor
-                  : AppColors.onPrimary,
-            ),
-          ]),
-        ),
+    return AppBar(
+      backgroundColor:
+          supp.isOffline ? Colors.white70 : AppColors.secondaryColor,
+      elevation: 0.0,
+      leading: AppIconButton(
+          icon: Icons.menu,
+          iconSize: 25.dw,
+          size: 55.dw,
+          onPressed: () => scaffoldKey.currentState!.openDrawer(),
+          iconColor:
+              supp.isOffline ? AppColors.textColor : AppColors.onPrimary2),
+      centerTitle: true,
+      title: AppText(
+        supp.isOffline ? 'Offline' : 'Online',
+        size: 18.dw,
+        color: supp.isOffline ? AppColors.secondaryColor : AppColors.onPrimary,
       ),
+      actions: [
+        AppIconButton(
+          onPressed: () => bloc.toggleStatus(mapController),
+          icon: supp.isOffline ? Icons.toggle_off_outlined : Icons.toggle_on,
+          size: 55.dw,
+          iconSize: 30.dw,
+          margin: EdgeInsets.only(right: 10.dw),
+          iconColor:
+              supp.isOffline ? AppColors.secondaryColor : AppColors.onPrimary,
+        ),
+      ],
     );
   }
 
@@ -357,6 +339,7 @@ class _DriverPageState extends State<DriverPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
+      log('resuming on the driver page using set state');
       bloc.refreshMap(mapController);
     }
   }

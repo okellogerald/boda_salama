@@ -35,13 +35,14 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       return Scaffold(
+        backgroundColor: Colors.grey.shade200,
         appBar: _buildAppBar(),
         body: Column(
           children: [
             _buildSampleMap(),
             _buildPickUpDetails(),
             _buildPhoneNumber(),
-            _buildTimer(),
+            // _buildTimer(),
             _buildPickUpButton(),
           ],
         ),
@@ -51,7 +52,7 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
 
   _buildAppBar() {
     return AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.secondaryColor,
         elevation: 0,
         title: AppText(
           'Riding to a pick up',
@@ -98,7 +99,7 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
         ),
         Container(
             padding: EdgeInsets.symmetric(vertical: 5.dw, horizontal: 10.dw),
-            color: Colors.black87,
+            color: AppColors.secondaryColor,
             child: AppText(
               'Real-time tracking',
               size: 14.dw,
@@ -137,8 +138,7 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       SizedBox(
           width: 100.dw,
-          child: AppText(title,
-              size: 16.dw, isBolded: true, color: AppColors.textColor2)),
+          child: AppText(title, size: 16.dw, color: AppColors.textColor)),
       SizedBox(width: 30.dw),
       Expanded(
           child: Row(
@@ -155,10 +155,9 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
 
   _buildPhoneNumber() {
     return Container(
-      height: 80.dh,
       width: ScreenSizeConfig.getFullWidth,
-      color: Colors.grey.shade300,
-      padding: EdgeInsets.symmetric(horizontal: 15.dw),
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 15.dw, vertical: 15.dh),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -173,7 +172,6 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
               AppText(
                 '0745-543-443',
                 size: 18.dw,
-                isBolded: true,
               ),
             ],
           ),
@@ -198,12 +196,21 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
           final isFinished = timerState == CustomTimerState.finished;
           if (isFinished) return Container();
 
-          return AppTextButton(
-            onPressed: isCounting ? () {} : timerController.start,
-            text: isCounting ? 'Reached the customer' : 'GO FOR PICK-UP',
-            buttonColor: AppColors.primaryColor,
-            textColor: AppColors.onPrimary,
-            height: 45.dh,
+          return Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppTextButton(
+                  onPressed:
+                      () {} /* isCounting ? () {} : timerController.start */,
+                  text: isCounting ? 'Reached the customer' : 'GO FOR PICK-UP',
+                  buttonColor: AppColors.primaryColor,
+                  textColor: AppColors.onPrimary,
+                  height: 45.dh,
+                  borderRadius: 0,
+                ),
+              ],
+            ),
           );
         });
   }
@@ -219,7 +226,7 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
       child: Container(
         height: 100.dh,
         width: ScreenSizeConfig.getFullWidth,
-        color: Colors.black87,
+        color: AppColors.secondaryColor,
         alignment: Alignment.center,
         child: CustomTimer(
             controller: timerController,
@@ -255,8 +262,9 @@ class _DriverToCustomerPageState extends State<DriverToCustomerPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      log('google map has been reloaded on the driver to customer page');
-      setState(() {});
+      log('google map has been reloaded on the driver to customer page using set state');
+      final controller = await mapController.future;
+      controller.setMapStyle('[]');
     }
   }
 }

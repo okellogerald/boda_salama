@@ -55,8 +55,13 @@ class TripsService {
     return _trips;
   }
 
-  Trip getRealTrip() {
+  Trip? getRealTrip() {
     final index = _trips.indexWhere((e) => e.isReal == true);
+    if (index == -1) {
+      //no real trip has been added by tapping on select this driver button.
+      //we add one.
+      return null;
+    }
     final trip = _trips[index];
     return trip;
   }

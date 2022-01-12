@@ -79,7 +79,6 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
               onPressed: bloc.cancelTrip,
               text: 'Cancel',
               height: 45.dh,
-              borderRadius: 5.dw,
               buttonColor: Colors.grey.shade400,
             ),
           ],
@@ -114,7 +113,7 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
 
   _buildAppBar() {
     return AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.secondaryColor,
         elevation: 0,
         title: AppText(
           'Waiting for pick up',
@@ -159,7 +158,7 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         ),
         Container(
             padding: EdgeInsets.symmetric(vertical: 5.dw, horizontal: 10.dw),
-            color: Colors.black87,
+            color: AppColors.secondaryColor,
             child: AppText(
               'Real-time tracking',
               size: 14.dw,
@@ -271,8 +270,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      log('google map has been reloaded on the driver to chat page');
-      setState(() {});
+      log('google map has been reloaded on the driver to chat page using set state');
+      bloc.refreshMap(mapController);
     }
   }
 }

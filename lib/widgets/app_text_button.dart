@@ -100,7 +100,7 @@ class _AppTextButtonState extends State<AppTextButton>
                           : Colors.transparent,
                       width: widget.borderColor == null ? 0 : 1.5),
                   borderRadius: BorderRadius.all(
-                      Radius.circular(widget.borderRadius ?? 0))),
+                      Radius.circular(widget.borderRadius ?? 5.dw))),
               child: widget.useButtonSizeOnly
                   ? child
                   : CustomPaint(

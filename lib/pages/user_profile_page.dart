@@ -1,19 +1,25 @@
 import '../source.dart';
 
-class UserProfilePage extends StatelessWidget {
+class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
 
   static void navigateTo(BuildContext context) => Navigator.push(
       context, MaterialPageRoute(builder: (_) => const UserProfilePage()));
 
   @override
+  State<UserProfilePage> createState() => _UserProfilePageState();
+}
+
+class _UserProfilePageState extends State<UserProfilePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _buildAppBar(),
+      backgroundColor: Colors.grey.shade200,
       body: Padding(
         padding: EdgeInsets.only(top: 40.dh),
         child: Column(
           children: [
-            _buildAppBar(),
             _buildTitle(),
             _buildAccountInfo(),
             _buildSignOutButton(),
@@ -24,30 +30,27 @@ class UserProfilePage extends StatelessWidget {
   }
 
   _buildAppBar() {
-    return Builder(builder: (context) {
-      return Padding(
-        padding: EdgeInsets.fromLTRB(15.dw, 0.dh, 15.dw, 30.dh),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AppIconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icons.arrow_back,
-              iconColor: AppColors.secondaryColor,
-              size: 35.dw,
-              iconSize: 25.dw,
-            ),
-            AppTextButton(
-              onPressed: () {},
-              text: 'Edit',
-              textColor: AppColors.primaryColor,
-              fontSize: 18.dw,
-              isBolded: true,
-            )
-          ],
+    return AppBar(
+      elevation: 0,
+      backgroundColor: AppColors.secondaryColor,
+      leading: AppIconButton(
+        onPressed: () => Navigator.pop(context),
+        icon: Icons.arrow_back,
+        iconColor: AppColors.onPrimary,
+        size: 35.dw,
+        iconSize: 25.dw,
+      ),
+      title: AppText('Profile Page', size: 18.dw, color: AppColors.onPrimary),
+      actions: [
+        AppIconButton(
+          onPressed: () {},
+          iconColor: AppColors.onPrimary,
+          margin: EdgeInsets.only(right: 15.dw),
+          size: 18.dw,
+          icon: Icons.edit_outlined,
         ),
-      );
-    });
+      ],
+    );
   }
 
   _buildTitle() {
@@ -75,47 +78,45 @@ class UserProfilePage extends StatelessWidget {
   }
 
   _buildAccountInfo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(15.dw, 35.dh, 15.dh, 0),
-          child: AppText(
-            'Account Info',
-            size: 22.dw,
-            color: AppColors.textColor2,
-            isBolded: true,
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.fromLTRB(15.dw, 0, 15.dw, 5.dh),
+      margin: EdgeInsets.only(top: 15.dh),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 15.dh),
+            padding: EdgeInsets.only(bottom: 8.dh),
+            width: ScreenSizeConfig.getFullWidth,
+            decoration: const BoxDecoration(
+                border:
+                    Border(bottom: BorderSide(color: Colors.grey, width: 1.5))),
+            child: AppText(
+              'Account Information',
+              size: 18.dw,
+              color: AppColors.textColor,
+            ),
           ),
-        ),
-        _buildListTile('Email', Icons.email, 'angelasmith@gmail.com'),
-        _buildListTile('Phone', Icons.phone, '+255743877660'),
-        _buildListTile('Language', Icons.language, 'English'),
-      ],
+          _buildListTile('Email', Icons.email, 'angelasmith@gmail.com'),
+          _buildListTile('Phone', Icons.phone, '+255743877660'),
+          _buildListTile('Language', Icons.language, 'English'),
+        ],
+      ),
     );
   }
 
   _buildListTile(String title, IconData icon, String value) {
-    return AppMaterialButton(
-      onPressed: () {},
-      margin: EdgeInsets.only(top: 10.dh),
-      padding: EdgeInsets.symmetric(horizontal: 15.dw, vertical: 5.dh),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, size: 20.dw, color: AppColors.secondaryColor),
-              SizedBox(width: 10.dw),
-              AppText(title, size: 16.dw, isBolded: true),
-            ],
-          ),
-          SizedBox(height: 5.dw),
-          AppText(
-            value,
-            size: 16.dw,
-            color: AppColors.textColor2,
-          )
-        ],
+    return ListTile(
+      leading: Icon(icon, size: 20.dw, color: AppColors.secondaryColor),
+      title: AppText(title, size: 16.dw),
+      horizontalTitleGap: 5.dw,
+      contentPadding: EdgeInsets.zero,
+      dense: true,
+      subtitle: AppText(
+        value,
+        size: 16.dw,
+        color: AppColors.textColor2,
       ),
     );
   }
@@ -130,9 +131,8 @@ class UserProfilePage extends StatelessWidget {
             text: 'Sign out',
             isBolded: true,
             height: 45.dh,
-            borderRadius: 5.dw,
             margin: EdgeInsets.only(left: 15.dw, right: 15.dw, bottom: 10.dw),
-            buttonColor: AppColors.secondaryColor,
+            buttonColor: AppColors.primaryColor,
             textColor: AppColors.onPrimary,
           ),
         ],

@@ -18,15 +18,30 @@ class DriverProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
+      appBar: _buildAppBar(),
       body: ListView(children: [
         _buildImages(),
         _buildTitle(),
-        _buildDriverCompliments(),
+        const Compliments(),
         _buildTaxStatus(),
         _buildReviewsList(),
+        SizedBox(height: 80.dh),
       ]),
       floatingActionButton: _buildFloatingButton(),
     );
+  }
+
+  _buildAppBar() {
+    return AppBar(
+        backgroundColor: AppColors.secondaryColor,
+        elevation: 0,
+        title: AppText(
+          'Driver\'s Profile Page',
+          size: 18.dw,
+          color: AppColors.onPrimary,
+          isBolded: true,
+        ));
   }
 
   _buildFloatingButton() {
@@ -34,55 +49,40 @@ class DriverProfilePage extends StatelessWidget {
       return AppTextButton(
           onPressed: () => ChatPage.navigateTo(context,
               driver: driver, location: userLocation),
-          text: 'Select driver',
+          text: 'Select Driver',
           height: 45.dh,
           buttonColor: AppColors.primaryColor,
           textColor: AppColors.onPrimary,
-          borderRadius: 5.dw,
           margin: EdgeInsets.only(left: 30.dw));
     });
   }
 
   _buildImages() {
-    return SizedBox(
+    return Container(
       height: 230.dh,
+      color: Colors.white,
       child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Opacity(
-                  opacity: .85,
-                  child: Container(
-                    height: 175.dh,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                'https://images.pexels.com/photos/819805/pexels-photo-819805.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'))),
-                  ),
-                ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Opacity(
+              opacity: .85,
+              child: Container(
+                height: 175.dh,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    image: const DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            'https://images.pexels.com/photos/819805/pexels-photo-819805.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'))),
               ),
-              CircleAvatar(
-                radius: 75.dh,
-                backgroundImage: NetworkImage(driver.image),
-              ),
-            ],
+            ),
           ),
-          Positioned(
-            left: 15.dw,
-            top: 10.dh,
-            child: Builder(builder: (context) {
-              return AppIconButton(
-                onPressed: () => Navigator.pop(context),
-                buttonColor: AppColors.secondaryColor,
-                iconColor: AppColors.onPrimary,
-                icon: Icons.arrow_back,
-                size: 35.dw,
-              );
-            }),
+          CircleAvatar(
+            radius: 75.dh,
+            backgroundImage: NetworkImage(driver.image),
+            backgroundColor: Colors.grey.shade300,
           ),
         ],
       ),
@@ -90,8 +90,10 @@ class DriverProfilePage extends StatelessWidget {
   }
 
   _buildTitle() {
-    return Padding(
+    return Container(
+      color: Colors.white,
       padding: EdgeInsets.symmetric(vertical: 20.dh),
+      // margin: EdgeInsets.only(top: 20.dh),
       child: Column(
         children: [
           AppText(
@@ -106,9 +108,8 @@ class DriverProfilePage extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: 10.dh, left: 15.dw, right: 15.dw),
-            padding: EdgeInsets.symmetric(vertical: 5.dh),
-            decoration: const BoxDecoration(
-                border: Border.symmetric(horizontal: BorderSide(width: 2))),
+            padding: EdgeInsets.symmetric(vertical: 10.dh),
+            color: Colors.grey.shade200,
             child: Row(
               children: [
                 _buildTitleValue('# of trips', '220'),
@@ -136,16 +137,13 @@ class DriverProfilePage extends StatelessWidget {
         ))),
         child: Column(
           children: [
-            AppText(
-              valueTitle,
-              size: 16.dw,
-              isBolded: true,
-            ),
+            AppText(valueTitle, size: 16.dw),
             SizedBox(height: 5.dh),
             AppText(
               value,
-              size: 16.dw,
+              size: 14.dw,
               color: AppColors.textColor2,
+              isBolded: true,
             ),
           ],
         ),
@@ -153,74 +151,11 @@ class DriverProfilePage extends StatelessWidget {
     );
   }
 
-  _buildDriverCompliments() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.dw),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 15.dh),
-          _buildSectionTitle('Driver Compliments'),
-          _buildComplimentList(),
-        ],
-      ),
-    );
-  }
-
-  _buildComplimentList() {
-    return Column(
-      children: [
-        _buildCompliment(
-            'https://cdn4.iconfinder.com/data/icons/basic-ui-2-line/32/word-balloon-speak-chat-conversation-128.png',
-            'Great Conversation',
-            35),
-        _buildCompliment(
-            'https://cdn3.iconfinder.com/data/icons/pandemic-solid-keep-healthy-routine/512/Alcohol_gel-128.png',
-            'Clean & Neat',
-            18),
-        _buildCompliment(
-            'https://cdn0.iconfinder.com/data/icons/sport-and-fitness-1/32/Sports_and_Fitness_helmet_rugby_football-128.png',
-            'Safe Driver',
-            20),
-        _buildCompliment(
-            'https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-128.png',
-            'Nice Experience',
-            35),
-        _buildCompliment(
-            'https://cdn0.iconfinder.com/data/icons/business-management-2-14/256/b-98-128.png',
-            'Timely Pickup',
-            22),
-      ],
-    );
-  }
-
-  _buildCompliment(String image, String title, int count) {
-    return Padding(
-      padding: EdgeInsets.only(top: 8.dw),
-      child: Row(
-        children: [
-          AppImage(imageUrl: image, size: 50.dw),
-          SizedBox(width: 20.dw),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText(title, size: 14.dw, isBolded: true),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 10.dw, vertical: 3.dw),
-                color: Colors.grey.shade300,
-                child: AppText('x $count', size: 12.dw, isBolded: true),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   _buildTaxStatus() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(15.dw, 20.dh, 15.dw, 10.dh),
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.fromLTRB(15.dw, 0.dh, 15.dw, 15.dh),
+      margin: EdgeInsets.only(top: 20.dh),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -228,7 +163,6 @@ class DriverProfilePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSectionTitle('Tax-paying status'),
-              SizedBox(height: 5.dh),
               Row(
                 children: [
                   Container(
@@ -242,7 +176,7 @@ class DriverProfilePage extends StatelessWidget {
                       color: AppColors.accentColor,
                     ),
                   ),
-                  SizedBox(width: 10.dw),
+                  SizedBox(width: 20.dw),
                   Expanded(
                     child: AppText(
                       'Excellent tax payer. Never missed a single payment.',
@@ -260,12 +194,13 @@ class DriverProfilePage extends StatelessWidget {
   }
 
   _buildReviewsList() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.dw),
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.fromLTRB(15.dw, 0, 15.dw, 0.dh),
+      margin: EdgeInsets.only(top: 20.dh),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10.dh),
           _buildSectionTitle('Reviews'),
           _buildReview(
             'https://cdn1.iconfinder.com/data/icons/user-pictures/100/boy-128.png',
@@ -288,7 +223,6 @@ class DriverProfilePage extends StatelessWidget {
             kReview3,
             0.0,
           ),
-          SizedBox(height: 80.dh),
         ],
       ),
     );
@@ -297,7 +231,7 @@ class DriverProfilePage extends StatelessWidget {
   _buildReview(
       String image, String name, String date, String review, double rating) {
     return Padding(
-      padding: EdgeInsets.only(top: 15.dh),
+      padding: EdgeInsets.only(bottom: 15.dh),
       child: Column(
         children: [
           Row(
@@ -313,30 +247,13 @@ class DriverProfilePage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppText(
-                        name,
-                        size: 16.dw,
-                        isBolded: true,
-                      ),
-                      AppText(
-                        date,
-                        size: 14.dw,
-                      )
+                      AppText(name, size: 16.dw),
+                      AppText(date, size: 14.dw)
                     ],
                   ),
                 ],
               ),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 10.dw, vertical: 5.dw),
-                color: Colors.grey.shade200,
-                child: AppText(
-                  rating.toString(),
-                  size: 14.dw,
-                  isBolded: true,
-                  color: AppColors.accentColor,
-                ),
-              )
+              RatingStars(rating),
             ],
           ),
           AppText(
@@ -350,7 +267,17 @@ class DriverProfilePage extends StatelessWidget {
   }
 
   _buildSectionTitle(String title) {
-    return AppText(title,
-        size: 20.dw, color: AppColors.textColor2, isBolded: true);
+    return Container(
+      margin: EdgeInsets.only(top: 15.dh, bottom: 12.dh),
+      padding: EdgeInsets.only(bottom: 8.dh),
+      width: ScreenSizeConfig.getFullWidth,
+      decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey, width: 1.5))),
+      child: AppText(
+        title,
+        size: 18.dw,
+        color: AppColors.textColor,
+      ),
+    );
   }
 }

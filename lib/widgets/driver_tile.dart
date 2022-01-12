@@ -83,6 +83,7 @@ class DriverTile extends StatelessWidget {
                       onPressed: () => viewOnMapCallback(driver),
                       text: 'View on map',
                       textColor: AppColors.primaryColor,
+                      borderRadius: 0,
                     ),
                     SizedBox(width: 20.dw),
                     AppTextButton(
@@ -90,6 +91,7 @@ class DriverTile extends StatelessWidget {
                           context, driver, userLocation),
                       text: 'Go to profile',
                       textColor: AppColors.primaryColor,
+                      borderRadius: 0,
                     )
                   ],
                 ))

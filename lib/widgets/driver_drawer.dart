@@ -8,7 +8,7 @@ class DriverDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 370.dw,
+      width: 380.dw,
       child: Drawer(
         child: Column(
           children: [
@@ -24,7 +24,7 @@ class DriverDrawer extends StatelessWidget {
   _buildTitle() {
     return Builder(builder: (context) {
       return Padding(
-        padding: EdgeInsets.fromLTRB(15.dw, 35.dh, 15.dw, 10.dh),
+        padding: EdgeInsets.fromLTRB(15.dw, 40.dh, 15.dw, 10.dh),
         child: Row(
           children: [
             CircleAvatar(
@@ -45,7 +45,7 @@ class DriverDrawer extends StatelessWidget {
                       OnDriverAppDriverProfilePage.navigateTo(context, driver),
                   text: 'View profile',
                   textColor: AppColors.primaryColor,
-                  height: 30.dh,
+                  borderRadius: 0,
                 ),
               ],
             ),
@@ -57,16 +57,15 @@ class DriverDrawer extends StatelessWidget {
 
   _buildEarningBanner() {
     return Card(
-      margin: EdgeInsets.all(10.dw),
-      elevation: 2,
-      shadowColor: Colors.grey.shade200,
+      margin: EdgeInsets.fromLTRB(15.dw, 15.dh, 15.dw, 0),
+      elevation: 0,
       color: AppColors.secondaryColor,
       child: Container(
-          padding: EdgeInsets.all(8.dw),
+          padding: EdgeInsets.all(15.dw),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppText('Earned today', size: 16.dw, color: AppColors.onPrimary2),
+              AppText('Earned today', size: 15.dw, color: AppColors.onPrimary2),
               AppText(
                 '70,000 /= Tzs',
                 size: 22.dw,
@@ -93,13 +92,12 @@ class DriverDrawer extends StatelessWidget {
         AppText(
           title,
           color: AppColors.onPrimary2,
-          size: 16.dw,
+          size: 15.dw,
         ),
         AppText(
           amount,
           color: AppColors.onPrimary,
-          isBolded: true,
-          size: 16.dw,
+          size: 15.dw,
         ),
       ],
     );
@@ -125,22 +123,15 @@ class DriverDrawer extends StatelessWidget {
 
   _buildTile(IconData icon, String title, {bool isClickable = false}) {
     return Builder(builder: (context) {
-      return AppTextButton(
+      return AppMaterialButton(
         onPressed: isClickable
             ? () => DocumentManagement.navigateTo(context, driver)
             : () {},
-        padding: EdgeInsets.only(left: 15.dw, top: 10.dh, bottom: 10.dh),
-        child: Row(
-          children: [
-            Icon(icon, color: AppColors.secondaryColor, size: 22.dw),
-            SizedBox(width: 15.dw),
-            AppText(
-              title,
-              size: 16.dw,
-              color: AppColors.textColor2,
-              weight: FontWeight.w600,
-            ),
-          ],
+        child: ListTile(
+          leading: Icon(icon),
+          title: AppText(title, size: 16.dw),
+          horizontalTitleGap: 5.dw,
+          dense: true,
         ),
       );
     });

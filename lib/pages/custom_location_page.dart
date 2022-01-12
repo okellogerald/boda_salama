@@ -108,13 +108,13 @@ class _CustomLocationPageState extends State<CustomLocationPage>
             left: 15.dw,
             child: Material(
               elevation: 2,
-              shadowColor: Colors.grey.shade100,
+              color: AppColors.secondaryColor,
               child: Container(
                 height: 40.dh,
                 alignment: Alignment.center,
                 width: ScreenSizeConfig.getFullWidth - 30.dw,
                 child: AppText(editor.address,
-                    size: 16.dw, color: AppColors.textColor2),
+                    size: 16.dw, color: AppColors.onPrimary2),
               ),
             ));
   }
@@ -146,7 +146,6 @@ class _CustomLocationPageState extends State<CustomLocationPage>
                   )
                 : AppTextButton(
                     onPressed: bloc.confirm,
-                    borderRadius: 15.dw,
                     text: 'Confirm Location',
                     buttonColor: AppColors.primaryColor,
                     height: 45.dh,

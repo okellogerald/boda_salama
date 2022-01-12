@@ -50,7 +50,7 @@ class DocumentPage extends StatelessWidget {
 
   _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.secondaryColor,
       elevation: 0,
       title: AppText(
         title,

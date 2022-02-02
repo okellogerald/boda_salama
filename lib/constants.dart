@@ -2,8 +2,6 @@ import 'package:boda_salama/source.dart';
 
 const kTripDetailsBox = 'trip_details_box';
 
-const kApiKey = 'AIzaSyD9gRxDtPoW2eIQaPl4bWvgpcJhXocXGL8';
-
 const kOpeningImage =
     'https://images.pexels.com/photos/7412104/pexels-photo-7412104.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
 const kTRALogo =
